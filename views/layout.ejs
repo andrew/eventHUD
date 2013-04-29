@@ -5,6 +5,12 @@
 </head>
 <body>
   <h1><a href='/'>eventHUD</a></h1>
+  <%if (!!user) { %>
+    <p>
+      <%= user.name %>
+      <a href='/logout'>Logout</a>
+    </p>
+  <% } %>
   <%- body -%>
   <footer>
     <p>Made by <a href='http://andrew.github.io'>Andrew Nesbitt</a></p>

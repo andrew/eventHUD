@@ -1,3 +1,8 @@
 <p>Hello there!</p>
 
-<a href='/auth/twitter'>Sign in with Twitter</a>
+<%if (!user) { %>
+  <p>
+    <a href='/auth/twitter'>Sign in with Twitter</a>
+  </p>
+<% } %>
+
