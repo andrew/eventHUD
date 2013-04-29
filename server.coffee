@@ -39,6 +39,10 @@ UserSchema = new Schema(
 
 HUDSchema = new Schema(
   name: String
+  hashtag: String
+  lanyrdURL: String
+  showTweets: Boolean
+  showSchedule: Boolean
   # userID: Schema.Types.ObjectId
   created:
     type: Date
@@ -56,6 +60,10 @@ HUD = mongoose.model("HUD")
 
 HUDForm = forms.create(
   name: fields.string(required: true)
+  hashtag: fields.string()
+  lanyrdURL: fields.string()
+  showTweets: fields.boolean(label: 'Show Tweets')
+  showSchedule: fields.boolean(label: 'Show Schedule')
 )
 
 # twitter oauth
@@ -101,8 +109,11 @@ app.get "/logout", (req, res) ->
 # application routes
 
 app.get "/", (req,res) ->
-  res.render 'home/index',
-    user: req.user
+  if req.user
+    res.redirect "huds"
+  else
+    res.render 'home/index',
+      user: req.user
 
 app.get "/huds", (req,res) ->
   HUD.find {}, (err, huds) ->
@@ -162,7 +173,12 @@ app.put "/huds/:id", (req, res) ->
     else
       HUDForm.handle req,
         success: (form) ->
+          console.log(form)
           hud.name = form.data.name
+          hud.hashtag = form.data.hashtag
+          hud.lanyrdURL = form.data.lanyrdURL
+          hud.showTweets = form.data.showTweets
+          hud.showSchedule = form.data.showSchedule
           hud.save (err, hud) ->
             if err
               res.render "huds/edit",

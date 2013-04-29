@@ -1,3 +1,13 @@
 <h2><%= hud.name %></h2>
 
-<a href='/huds/<%= hud._id %>/edit'>Edit</a>
+<p><a href='/huds/<%= hud._id %>/edit' class='btn'>Edit</a></p>
+
+<h3>Sections</h3>
+<ul>
+  <% if(hud.showTweets){ %>
+    <li>Tweets for <strong><%= hud.hashtag %></strong></li>
+  <% } %>
+  <% if(hud.showSchedule){ %>
+    <li>Schedule from <strong><a href='<%= hud.lanyrdURL %>'>Lanyrd</a></strong></li>
+  <% } %>
+</ul>
