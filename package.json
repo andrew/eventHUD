@@ -1,0 +1,26 @@
+{
+  "name": "eventHUD",
+  "version": "0.0.1",
+  "description": "A dashboard for your events",
+  "main": "server.coffee",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrew/eventHUD.git"
+  },
+  "keywords": [
+    "events"
+  ],
+  "author": "Andrew Nesbitt",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "express": "~3.2.0",
+    "lanyrd": "~0.1.0",
+    "twit": "~1.1.6",
+    "coffee-script": "~1.6.2",
+    "ejs": "~0.8.3",
+    "express-partials": "~0.1.1",
+    "passport": "~0.1.16",
+    "passport-twitter": "~0.1.4"
+  }
+}
