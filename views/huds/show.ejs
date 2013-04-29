@@ -1,13 +1,6 @@
-<h2><%= hud.name %></h2>
+<h2><%= hud.lanyrdURL %></h2>
 
-<p><a href='/huds/<%= hud._id %>/edit' class='btn'>Edit</a></p>
-
-<h3>Sections</h3>
-<ul>
-  <% if(hud.showTweets){ %>
-    <li>Tweets for <strong><%= hud.hashtag %></strong></li>
-  <% } %>
-  <% if(hud.showSchedule){ %>
-    <li>Schedule from <strong><a href='<%= hud.lanyrdURL %>'>Lanyrd</a></strong></li>
-  <% } %>
-</ul>
+<p>
+  <a href='/huds/<%= hud._id %>/view' class='btn'>View</a>
+  <a href='/huds/<%= hud._id %>/edit' class='btn'>Edit</a>
+</p>
