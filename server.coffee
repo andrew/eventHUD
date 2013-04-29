@@ -4,6 +4,7 @@ passport = require "passport"
 mongoose = require 'mongoose'
 resource = require 'express-resource'
 forms    = require 'forms'
+Lanyrd   = require 'lanyrd'
 
 TwitterStrategy = require("passport-twitter").Strategy
 Schema          = mongoose.Schema
@@ -194,6 +195,14 @@ app.put "/huds/:id", (req, res) ->
             form: form
             user: req.user
 
+app.get "/:year/:slug", (req, res) ->
+  Lanyrd.attendees req.params.slug, req.params.year, (err, resp, attendees)->
+    Lanyrd.event req.params.slug, req.params.year, (err, resp, event)->
+      res.render 'events/show',
+        event: event
+        user: req.user
+        layout: 'fullscreen'
+        attendees: attendees
 
 # startup
 

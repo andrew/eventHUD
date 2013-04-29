@@ -1,0 +1,59 @@
+<div id='sections'>
+  <section id='attendees'>
+    <% var times = Math.ceil((1000*700/2500)/event.num_attendees) %>
+    <h1><%= event.title %> - Attendees</h1>
+    <div class='avatars'>
+        <% for(var j=0; j<times; j++) { %><% for(var i=0; i<attendees.length; i++) {%><img src='<%= attendees[i].image %>' alt='<%= attendees[i].title %>'><% } %><% } %></div>
+  </section>
+
+  <section id='location'>
+    <h1><%= event.title %> - Location</h1>
+
+    <div id='map'></div>
+    <script type='text/javascript'>
+
+    var map = mapbox.map('map');
+    map.addLayer(mapbox.layer().id('andrewnez.map-8j2hw1bf'));
+    map.zoom(16).center({ lat: <%= event.primary_venue.latitude %>, lon: <%= event.primary_venue.longitude %> });
+    
+    var markerLayer = mapbox.markers.layer();
+    mapbox.markers.interaction(markerLayer);
+    map.addLayer(markerLayer);
+    
+    markerLayer.add_feature({
+          geometry: {
+              coordinates: [<%= event.primary_venue.longitude %>, <%= event.primary_venue.latitude %>]
+          },
+          properties: {
+              'marker-color': '#000',
+              'marker-symbol': 'star-stroked',
+              'marker-size': 'large',
+              title: '<%= event.primary_venue.title %>',
+              description: '<%= event.primary_venue.subtitle %>'
+          }
+      });
+      setTimeout(function(){markerLayer.markers()[0].showTooltip()}, 500)
+    </script>
+  </section>
+
+  <!--
+  <section id='general'>
+    <h1><%= event.title %></h1>
+  </section>
+
+  <section id='tweets'>
+    <h1><%= event.title %> - Tweets</h1>
+  </section>
+
+  <section id='speakers'>
+    <h1><%= event.title %> - Speakers</h1>
+  </section>
+
+  <section id='schedule'>
+    <h1><%= event.title %> - Schedule</h1>
+  </section>
+
+  <section id='staff'>
+    <h1><%= event.title %> - Staff</h1>
+  </section> -->
+</div>

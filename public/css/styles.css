@@ -1,0 +1,43 @@
+#sections{
+  width:10000px;
+  overflow-x: scroll;
+}
+
+section{
+  height:700px;
+  float:left;
+  width:1000px;
+  margin-right:300px;
+  position:relative;
+}
+
+section h1{
+  position:absolute;
+  margin:20px;
+  padding:10px;
+  left:10px;
+  color:#fff;
+  background:rgba(0,0,0,0.7);
+  text-shadow:1px 1px 1px #000;
+}
+
+#map {
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:100%;
+  left:0;
+  z-index:-1;
+}
+.marker-title{
+  font-weight:bold;
+}
+
+.leaflet-control-zoom{
+  display:none;
+}
+
+#attendees img{
+  width:50px;
+  height:50px;
+}
