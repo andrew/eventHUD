@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>eventHUD</title>
-</head>
-<body>
-  <h1><a href='/'>eventHUD</a></h1>
-  <%if (!!user) { %>
-    <p>
-      <%= user.name %>
-      <a href='/logout'>Logout</a>
-    </p>
-  <% } %>
-  <%- body -%>
-  <footer>
-    <p>Made by <a href='http://andrew.github.io'>Andrew Nesbitt</a></p>
-  </footer>
-</body>
+  <head>
+    <title>eventHUD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div class="container">
+      <h1><a href='/'>eventHUD</a></h1>
+      <%if (!!user) { %>
+        <p>
+          <%= user.name %>
+          <a href='/logout'>Logout</a>
+        </p>
+      <% } %>
+      <%- body -%>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">Made by <a href='http://andrew.github.io'>Andrew Nesbitt</a></p>
+      </div>
+    </div>
+    
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
 </html>
