@@ -1,9 +1,14 @@
-express = require 'express'
+express  = require 'express'
 partials = require 'express-partials'
 passport = require "passport"
 mongoose = require 'mongoose'
+resource = require 'express-resource'
+forms    = require 'forms'
+
 TwitterStrategy = require("passport-twitter").Strategy
-Schema = mongoose.Schema
+Schema          = mongoose.Schema
+fields          = forms.fields
+validators      = forms.validators
 
 # express configuration
 
@@ -18,6 +23,7 @@ app.use(express.bodyParser());
 app.use(express.session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.methodOverride());
 
 # mongo config
 
@@ -31,10 +37,26 @@ UserSchema = new Schema(
     default: Date.now
 )
 
+HUDSchema = new Schema(
+  name: String
+  # userID: Schema.Types.ObjectId
+  created:
+    type: Date
+    default: Date.now
+)
+
 mongoose.connect "mongodb://localhost/eventhud"
 mongoose.model "User", UserSchema
+mongoose.model "HUD", HUDSchema 
 
 User = mongoose.model("User")
+HUD = mongoose.model("HUD")
+
+# forms
+
+HUDForm = forms.create(
+  name: fields.string(required: true)
+)
 
 # twitter oauth
 
@@ -80,8 +102,82 @@ app.get "/logout", (req, res) ->
 
 app.get "/", (req,res) ->
   res.render 'home/index',
-    layout: 'layout'
     user: req.user
+
+app.get "/huds", (req,res) ->
+  HUD.find {}, (err, huds) ->
+    if err
+      res.send('not found', 404);
+    else
+      res.render 'huds/index',
+        user: req.user
+        huds: huds
+
+app.get "/huds/new", (req, res) ->
+  res.render 'huds/new',
+    user: req.user
+    form: HUDForm 
+
+app.get "/huds/:id/edit", (req, res) ->
+  HUD.findById req.params.id, (err, hud) ->
+    if err
+      res.send('not found', 404);
+    else
+      form = HUDForm.bind(hud)
+      res.render "huds/edit",
+        user: req.user
+        hud: hud
+        form: form
+
+app.post "/huds", (req, res) ->
+  HUDForm.handle req,
+    success: (form) ->
+      hud = new HUD(form.data)
+      hud.save (err, hud) ->
+        if err
+          res.render "huds/new",
+            user: req.user
+        else
+          res.redirect "huds/#{hud.id}"
+
+    other: (form) ->
+      console.log 'invalid'
+      res.render "huds/new",
+        form: form
+        user: req.user
+
+app.get "/huds/:id", (req, res) ->
+  HUD.findById req.params.id, (err, hud) ->
+    if err
+      res.send('not found', 404);
+    else
+      res.render "huds/show",
+        user: req.user
+        hud: hud
+
+app.put "/huds/:id", (req, res) ->
+  HUD.findById req.params.id, (err, hud) ->
+    if err
+      res.send('not found', 404);
+    else
+      HUDForm.handle req,
+        success: (form) ->
+          hud.name = form.data.name
+          hud.save (err, hud) ->
+            if err
+              res.render "huds/edit",
+                user: req.user
+                hud: hud
+                form: form
+            else
+              res.redirect "huds/#{hud.id}"
+
+        other: (form) ->
+          console.log 'invalid'
+          res.render "huds/new",
+            form: form
+            user: req.user
+
 
 # startup
 

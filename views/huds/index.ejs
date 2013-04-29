@@ -1,0 +1,9 @@
+<ul>
+<% for(var i=0; i<huds.length; i++) {%>
+  <li>
+    <a href='/huds/<%= huds[i]._id %>'>
+      <%= huds[i].name %>
+    </a>
+  </li>
+<% } %>
+</ul>

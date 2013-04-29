@@ -22,6 +22,8 @@
     "express-partials": "~0.1.1",
     "passport": "~0.1.16",
     "passport-twitter": "~0.1.4",
-    "mongoose": "~3.6.8"
+    "mongoose": "~3.6.8",
+    "express-resource": "~1.0.0",
+    "forms": "~0.2.0"
   }
 }
